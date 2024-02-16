@@ -230,7 +230,7 @@ export default class StateManager {
     }
 
     private static onKeyDown(ev: KeyboardEvent) {
-        if ((ev.code === "Backspace" || ev.code === "Delete") && ev.ctrlKey) {
+        if (ev.code === "Backspace" || ev.code === "Delete") {
             StateManager.deleteAllSelectedObjects();
         }
     }
