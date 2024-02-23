@@ -230,7 +230,7 @@ export default class StateManager {
     }
 
     private static onKeyDown(ev: KeyboardEvent) {
-        if (ev.code === "Backspace" || ev.code === "Delete") {
+        if ((ev.code === "Backspace" || ev.code === "Delete") && ev.ctrlKey) {
             StateManager.deleteAllSelectedObjects();
         }
     }
@@ -502,6 +502,10 @@ export default class StateManager {
 
     public static get useDarkMode() {
         return this._useDarkMode;
+    }
+
+    public static isLabelUnique(label: string) {
+        return !StateManager.toJSON().states.some(state => state.label === label);
     }
 }
 
