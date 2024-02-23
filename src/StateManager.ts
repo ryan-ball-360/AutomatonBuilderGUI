@@ -504,9 +504,12 @@ export default class StateManager {
         return this._useDarkMode;
     }
 
-    public static isLabelUnique(label: string) {
-        return !StateManager.toJSON().states.some(state => state.label === label);
+    public static areAllLabelsUnique(): boolean {
+        const labels = StateManager._nodeWrappers.map(node => node.labelText);
+        const uniqueLabels = new Set(labels);
+        return labels.length === uniqueLabels.size;
     }
+    
 }
 
 interface SerializedAutomaton {

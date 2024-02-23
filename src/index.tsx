@@ -18,6 +18,8 @@ function App() {
     const [selectedObjects, setSelectedObjects] = useState(new Array<SelectableObject>());
     const [startNode, setStartNode] = useState(StateManager.startNode);
 
+    const [isLabelUnique, setIsLabelUnique] = useState(true);
+
     // Switch current tool when keys pressed
     useEffect(() => {
         StateManager.setSelectedObjects = setSelectedObjects;
@@ -49,6 +51,13 @@ function App() {
         StateManager.currentTool = currentTool;
     }, [currentTool]);
 
+
+    useEffect(() => {
+        const unique = StateManager.areAllLabelsUnique();
+        setIsLabelUnique(unique);
+    }, [selectedObjects]);
+
+
     useEffect(() => {
         StateManager.selectedObjects = selectedObjects;
     }, [selectedObjects]);
@@ -66,6 +75,7 @@ function App() {
     const [TestStringWindowOpen, setTestStringWindowOpen] = useState(false);
     const openTestStringWindow = () => { setTestStringWindowOpen(true); };
     const closeTestStringWindow = () => { setTestStringWindowOpen(false); };
+
 
     const [useDarkMode, setDarkMode] = useState(false);
     const toggleDarkMode = () => { setDarkMode(!useDarkMode); };
@@ -86,6 +96,12 @@ function App() {
         />
 
         {/* Some example error message boxes */}
+        
+    {!isLabelUnique && (
+        <InformationBox infoBoxType={InformationBoxType.Error}>
+            Duplicate state labels detected. Each state must have a unique label.
+        </InformationBox>
+    )}      
         <InformationBox infoBoxType={InformationBoxType.Error}>
             State "q0" has multiple transitions for token "a"
         </InformationBox>

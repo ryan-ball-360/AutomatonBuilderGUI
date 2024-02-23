@@ -10,9 +10,8 @@ interface ToolboxProps {
 }
 
 export default function Toolbox(props: React.PropsWithChildren<ToolboxProps>) {
-    const fileInputRef = useRef<HTMLInputElement>(null); // Create a ref for the file input
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
-    //trigger file input click event
     const handleLoadButtonClick = () => {
         fileInputRef.current?.click(); 
     };
