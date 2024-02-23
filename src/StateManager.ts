@@ -503,6 +503,13 @@ export default class StateManager {
     public static get useDarkMode() {
         return this._useDarkMode;
     }
+
+    public static areAllLabelsUnique(): boolean {
+        const labels = StateManager._nodeWrappers.map(node => node.labelText);
+        const uniqueLabels = new Set(labels);
+        return labels.length === uniqueLabels.size;
+    }
+    
 }
 
 interface SerializedAutomaton {
