@@ -18,6 +18,8 @@ function App() {
     const [selectedObjects, setSelectedObjects] = useState(new Array<SelectableObject>());
     const [startNode, setStartNode] = useState(StateManager.startNode);
 
+    const [isLabelUnique, setIsLabelUnique] = useState(true);
+
     // Switch current tool when keys pressed
     useEffect(() => {
         StateManager.setSelectedObjects = setSelectedObjects;
@@ -56,7 +58,11 @@ function App() {
     useEffect(() => {
         StateManager.startNode = startNode;
     }, [startNode]);
-
+  
+    useEffect(() => {
+        const unique = StateManager.areAllLabelsUnique();
+        setIsLabelUnique(unique);
+    }, [selectedObjects]);
 
     // Config window
     const [configWindowOpen, setConfigWindowOpen] = useState(false);
@@ -85,8 +91,13 @@ function App() {
             setStartNode={setStartNode}
         />
 
+        {!isLabelUnique && (
+            <InformationBox infoBoxType={InformationBoxType.Error}>
+                Duplicate state labels detected. Each state must have a unique label.
+            </InformationBox>
+        )}
         {/* Some example error message boxes */}
-        <InformationBox infoBoxType={InformationBoxType.Error}>
+        {/* <InformationBox infoBoxType={InformationBoxType.Error}>
             State "q0" has multiple transitions for token "a"
         </InformationBox>
 
@@ -112,7 +123,7 @@ function App() {
 
         <InformationBox infoBoxType={InformationBoxType.Warning}>
             Accept state "q4" is inaccessible; automaton will always reject
-        </InformationBox>
+        </InformationBox> */}
         
         <div className="flex flex-col items-center mt-4">
             <button
